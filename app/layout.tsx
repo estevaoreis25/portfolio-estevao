@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -24,6 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio-estevao-phi.vercel.app"),
   title: "Estevão Reis — FullStack Software Engineer | Freelancer",
   description:
     "Engenheiro de software com experiência em governo, fintech e ERP. Crio sites, dashboards e sistemas que funcionam em produção. Baseado em Brasília, atendo remotamente.",
@@ -67,7 +68,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

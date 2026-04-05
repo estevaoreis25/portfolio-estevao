@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# outreach data (contains emails — do not commit)
+/data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
