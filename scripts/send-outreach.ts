@@ -17,6 +17,7 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const CSV_PATH = path.resolve(process.cwd(), "data", "outreach-emails.csv");
 const DELAY_MS = 800;
+const BATCH_LIMIT = 3500;
 const EMAIL_SUBJECT = "Seu próximo projeto digital 🚀";
 const FROM = `Estevão Reis <${FROM_EMAIL}>`;
 
@@ -63,16 +64,20 @@ function sleep(ms: number) {
 
 async function main() {
   const rows = readCsv();
-  const pending = rows.filter((r) => r.enviado !== "true");
+  const allPending = rows.filter((r) => r.enviado !== "true");
 
-  if (pending.length === 0) {
+  if (allPending.length === 0) {
     console.log("✅ Nenhum email pendente — todos já foram enviados.");
     return;
   }
 
-  const alreadySent = rows.length - pending.length;
+  const pending = allPending.slice(0, BATCH_LIMIT);
+  const alreadySent = rows.length - allPending.length;
   console.log(
-    `📧 ${pending.length} emails pendentes (${alreadySent} já enviados)\n`,
+    `📧 ${allPending.length} emails pendentes no total (${alreadySent} já enviados)`,
+  );
+  console.log(
+    `🚀 Enviando lote de até ${BATCH_LIMIT}: ${pending.length} emails\n`,
   );
 
   let sent = 0;
